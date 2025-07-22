@@ -7,7 +7,7 @@ export const CartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-    
+        state.items.push(action.payload); // Adds the product to the cart
     },
     removeItem: (state, action) => {
     },

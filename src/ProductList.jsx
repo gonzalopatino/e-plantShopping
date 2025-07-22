@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
 
+import { useDispatch } from 'react-redux';
+import { addItem } from './CartSlice'; // Adjust path if needed
+
+
+
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
@@ -257,6 +262,31 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(false);
     };
+
+    const dispatch = useDispatch();
+    
+    const handleAddToCart = (product) => { // This function is triggered when the user clicks "Add to Cart" on a product
+
+        // Redux action: dispatches the selected product to the global cart state(store)
+        // This sends the product to the CartSlice reducer's `addItem` function
+        dispatch(addItem(product));
+    
+        // Local UI state: update the component's own state to reflect the product was added
+        // This helps us change the button label from "Add to Cart" to "Added"
+        setAddedToCart((prevState) => ({
+    
+        // Spread syntax: keep all previously added products untouched
+        ...prevState,
+        [product.name]: true, // Add/update this product's name in the object and mark it as true (added)
+    
+        // Example result:
+        // if product.name is "Lavender", the state becomes:
+        // { "Lavender": true, ...others }
+    
+        }));
+    };
+  
+
     return (
         <div>
             <div className="navbar" style={styleObj}>
