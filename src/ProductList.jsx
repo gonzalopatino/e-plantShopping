@@ -5,6 +5,10 @@ import CartItem from './CartItem';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+    const [addedToCart, setAddedToCart] = useState({}); //State to track added plants
+
+
+
 
     const plantsArray = [
         {
@@ -285,7 +289,10 @@ function ProductList({ onHomeClick }) {
                                 <h3>{plant.name}</h3>
                                 <p>{plant.description}</p>
                                 <p>{plant.cost}</p>
-                                <button>Add to Cart</button>
+                                <button onClick={() => handleAddToCart(plant)}>
+                                    {addedToCart[plant.name] ? "Added" : "Add to Cart"}
+                                </button>
+
                                 </div>
                             ))}
                             </div>
